@@ -1,0 +1,216 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Introduction SOLID",
+    "description": "This is an Api with SOLID",
+    "version": "1.0.0",
+    "contact": {
+      "email": "lehbc.oliver@gmail.com"
+    }
+  },
+  "paths":{
+    "/Users": {
+      "post": {
+        "tags": ["Users"],
+        "summary": "Create user",
+        "description": "Create a new user",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json":{
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "email":{
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "name": "user name",
+                  "description": "user email"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "successful operation",
+            "content": {
+              "application/json":{
+                "schema": {
+                  "example": {
+                    "admin": false,
+                    "id": "874831219399e9399e",
+                    "name": "Leandro",
+                    "email": "lehbc.oliver@gmail.com",
+                    "createt_at": "2023-05-30T22:00:00Z",
+                    "updated_at": "2023-05-30T22:00:00Z"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Email already exists",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "error": "This email is alredy in use"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get":{
+        "tags": ["Users"],
+        "summary": "List all users",
+        "description": "only admins can access",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            
+            "required": true
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "successful operation",
+            "content": {
+              "application/json":{
+                "schema": {
+                  "example": [{
+                    "admin": true,
+                    "id": "874831219399e9399e",
+                    "name": "Leandro",
+                    "email": "lehbc.oliver@gmail.com",
+                    "createt_at": "2023-05-30T22:00:00Z",
+                    "updated_at": "2023-05-30T22:00:00Z"
+                  },
+                  {
+                    "admin": false,
+                    "id": "874831219399e9399e",
+                    "name": "Leandro",
+                    "email": "lehbc.oliver@gmail.com",
+                    "createt_at": "2023-05-30T22:00:00Z",
+                    "updated_at": "2023-05-30T22:00:00Z"
+                  }]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "not authorization",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "error": "You need to be an administrator to list all users"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+      },
+      "/users/{user_id}":{
+        "get":{
+          "tags": ["Users"],
+          "summary": "List specific user",
+          "parameters": [
+            {
+              "name": "user_id ID user",
+              "in": "path",
+              
+              "required": true
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "successful operation",
+              "content": {
+              "application/json":{
+                "schema": {
+                  "example": {
+                    "admin": true,
+                    "id": "874831219399e9399e",
+                    "name": "Leandro",
+                    "email": "lehbc.oliver@gmail.com",
+                    "createt_at": "2023-05-30T22:00:00Z",
+                    "updated_at": "2023-05-30T22:00:00Z"
+                  }
+                }
+              }
+            }
+            },
+            "404":{
+              "description": "user not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "error": "User not found"
+                  }
+                }
+              }
+            }
+            }
+          }
+        }
+      },
+      "/users/{user_id}/admin":{
+        "get":{
+          "tags": ["Users"],
+          "summary": "make admin user",
+          "parameters": [
+            {
+              "name": "user_id",
+              "in": "path",
+              
+              "required": true
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "successful operation",
+              "content": {
+              "application/json":{
+                "schema": {
+                  "example": {
+                    "admin": true,
+                    "id": "874831219399e9399e",
+                    "name": "Leandro",
+                    "email": "lehbc.oliver@gmail.com",
+                    "createt_at": "2023-05-30T22:00:00Z",
+                    "updated_at": "2023-05-30T22:00:00Z"
+                  }
+                }
+              }
+            }
+            },
+            "404":{
+              "description": "user not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "error": "User not found"
+                  }
+                }
+              }
+            }
+            }
+          }
+        }
+      }
+      }
+    }
+  
